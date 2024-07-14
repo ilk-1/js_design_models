@@ -1,5 +1,5 @@
 const CreateDiv = (() => {
-    let instance: CreateDiv;
+    let instance: CreateDiv | null = null;
 
     class CreateDiv {
         html: string = "";
@@ -8,11 +8,15 @@ const CreateDiv = (() => {
                 return instance;
             }
             this.html = html;
-            return instance = this;
+            instance = this;
+            return instance;
         }
 
         getName() {
             console.log(this.html);
+        }
+        dispose() {
+            instance = null; 
         }
     }
 
@@ -26,9 +30,10 @@ console.log(a === b);
 a.getName();    // sven1
 b.getName();    // sven1
 
-a = null;
-b.getName();    // sven1
+a.dispose();
+b.dispose();
 
+a = null;
 b = null;
 
 setTimeout(() => {
